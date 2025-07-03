@@ -8,18 +8,24 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/domahawindows.js'),
       name: 'DomahaWindow',
       fileName: (format) => {
-        if (format === 'es') return 'domahawindows.js';       // لملف ES Module
-        if (format === 'umd') return 'domahawindows.umd.cjs'; // لملف UMD CommonJS
-        return `domahawindows.${format}.js`; // لأي تنسيقات أخرى
+        if (format === 'es') return 'domahawindows.js';
+        if (format === 'umd') return 'domahawindows.umd.cjs';
+        return `domahawindows.${format}.js`;
       },
     },
+    // هذا السطر يضمن استخراج CSS كملف منفصل
+    cssCodeSplit: true, 
+
     rollupOptions: {
-      // تأكد من أن هذا القسم موجود
       output: {
-        // هذا هو السطر الحاسم!
-        // يخبر Rollup أن التصديرات يجب أن تكون حتمًا كـ "named exports"
-        // وفي حالة وجود 'export default'، سيتم التعامل معه كـ "default" مسمى.
-        exports: 'named', 
+        exports: 'named', // هذا مهم للتصدير الافتراضي
+
+        // هذا الخيار قد يكون مفيدًا لضمان تسمية ملف الـ CSS بشكل صحيح
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') return 'style.css'; // تأكد من اسم الملف هنا
+          if (assetInfo.name === 'domahawindows.css') return 'style.css'; // إذا كان اسمه الأصلي domahawindows.css
+          return assetInfo.name;
+        },
       }
     }
   }
