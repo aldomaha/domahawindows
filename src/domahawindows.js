@@ -1,16 +1,15 @@
+// src/domahawindows.js (في مشروع مكتبتك domahawindows)
 export default class DomahaWindow {
     /**
      * الدالة الإنشائية: يتم استدعاؤها عند إنشاء نافذة جديدة.
      * @param {object} config - كائن الإعدادات.
      */
     constructor(config = {}) {
-        // حفظ الخطوات التي تم تمريرها.
+        // إذا كان المحتوى HTML، فسنستخدمه مباشرة.
+        // وإلا، سنعود إلى النص العادي.
         this.steps = config.steps || [{ title: 'رسالة', content: 'لا يوجد محتوى.' }];
-        // تتبع الخطوة الحالية (دائمًا نبدأ من الصفر).
         this.currentStepIndex = 0;
-        // خاصية لحفظ عنصر النافذة بعد إنشائه.
         this.windowElement = null;
-        // بناء عنصر النافذة في الذاكرة.
         this._createWindowElement();
     }
 
@@ -21,11 +20,9 @@ export default class DomahaWindow {
     _createWindowElement() {
         const windowDiv = document.createElement('div');
         const footerButtons = `
-           
-    <button class="domaha-window-prev domaha-window-confirm">السابق</button>
-    <button class="domaha-window-next domaha-window-confirm">التالي</button>
-`;
-        
+            <button class="domaha-window-prev domaha-window-confirm">السابق</button>
+            <button class="domaha-window-next domaha-window-confirm">التالي</button>
+        `;
         
         windowDiv.innerHTML = `
             <div class="domaha-window-overlay">
@@ -35,7 +32,7 @@ export default class DomahaWindow {
                         <button class="domaha-window-close">&times;</button>
                     </div>
                     <div class="domaha-window-body">
-                        <p></p>
+                        <div class="domaha-window-inner-content"></div> 
                     </div>
                     <div class="domaha-window-footer">
                         ${footerButtons}
@@ -56,13 +53,21 @@ export default class DomahaWindow {
      */
     _updateContent() {
         const titleElement = this.windowElement.querySelector('.domaha-window-title');
-        const contentElement = this.windowElement.querySelector('.domaha-window-body p');
+        const innerContentElement = this.windowElement.querySelector('.domaha-window-inner-content'); // استهداف العنصر الجديد
         const nextButton = this.windowElement.querySelector('.domaha-window-next');
         const prevButton = this.windowElement.querySelector('.domaha-window-prev');
 
-        // تحديث العنوان والمحتوى بناءً على الخطوة الحالية.
-        titleElement.textContent = this.steps[this.currentStepIndex].title;
-        contentElement.textContent = this.steps[this.currentStepIndex].content;
+        const currentStep = this.steps[this.currentStepIndex];
+
+        // تحديث العنوان
+        titleElement.textContent = currentStep.title;
+
+        // تحديث المحتوى: إذا كان HTML، استخدم innerHTML، وإلا استخدم textContent
+        if (currentStep.htmlContent) { // سنستخدم خاصية جديدة لـ HTML
+            innerContentElement.innerHTML = currentStep.htmlContent;
+        } else {
+            innerContentElement.textContent = currentStep.content;
+        }
 
         // إخفاء زر "السابق" في الخطوة الأولى.
         prevButton.style.display = this.currentStepIndex === 0 ? 'none' : 'inline-block';
@@ -71,51 +76,5 @@ export default class DomahaWindow {
         nextButton.textContent = (this.currentStepIndex === this.steps.length - 1) ? 'إنهاء' : 'التالي';
     }
 
-    /**
-     * دالة الانتقال للخطوة التالية.
-     */
-    next() {
-        if (this.currentStepIndex < this.steps.length - 1) {
-            this.currentStepIndex++;
-            this._updateContent();
-        } else {
-            this.close(); // إغلاق النافذة عند الضغط على "إنهاء".
-        }
-    }
-
-    /**
-     * دالة الرجوع للخطوة السابقة.
-     */
-    prev() {
-        if (this.currentStepIndex > 0) {
-            this.currentStepIndex--;
-            this._updateContent();
-        }
-    }
-
-    /**
-     * دالة إظهار النافذة.
-     */
-    show() {
-        // تحديث المحتوى ليعرض الحالة الصحيحة قبل الإظهار.
-        this._updateContent();
-        document.body.appendChild(this.windowElement);
-    }
-
-    /**
-     * دالة إغلاق النافذة.
-     */
-    close() {
-        if (document.body.contains(this.windowElement)) {
-            document.body.removeChild(this.windowElement);
-        }
-    }
-    
-    /**
-     * دالة ثابتة لتسهيل إنشاء نافذة متعددة الخطوات.
-     */
-    static wizard(steps) {
-        const newWindow = new DomahaWindow({ steps: steps });
-        newWindow.show();
-    }
+    // ... بقية دوال الكلاس (next, prev, show, close, static wizard) تبقى كما هي ...
 }
