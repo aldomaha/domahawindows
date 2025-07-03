@@ -1,16 +1,9 @@
-/* سنضع كل تنسيقاتنا هنا لاحقًا */
-.domaha-window {
-    /* For later */
-}
-@import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap');
 :root {
   --dw-overlay-bg: rgba(0, 0, 0, 0.6);
   --dw-bg: white;
   --dw-bg1: #2b2c2d;
-  
   --domaha-bg: linear-gradient(to right, #4f46e5, #3b82f6);
-
-
   --dw-border-radius: 12px;
   --dw-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   --dw-header-border: #e5e7eb;
@@ -21,17 +14,7 @@
   --dw-button-hover-bg: #4338ca;
   --dw-button-text: white;
 }
-.aref-ruqaa-ink-regular {
-  font-family: "Aref Ruqaa Ink", serif;
-  font-weight: 400;
-  font-style: normal;
-}
 
-.aref-ruqaa-ink-bold {
-  font-family: "Aref Ruqaa Ink", serif;
-  font-weight: 700;
-  font-style: normal;
-}
 
 
 .domaha-window-overlay {
@@ -49,7 +32,7 @@
 }
 
 .domaha-window-content {
-  background:var(--domaha-bg);
+  background: var(--domaha-bg);
   padding: 2rem;
   border-radius: var(--dw-border-radius);
   box-shadow: var(--dw-shadow);
@@ -70,10 +53,10 @@
 }
 
 .domaha-window-title {
-font-family: 'Aref Ruqaa Ink', serif;
+
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--dw-title-color);
+  color: var(--dw-text-color);
   margin: 0;
 }
 
@@ -89,10 +72,10 @@ font-family: 'Aref Ruqaa Ink', serif;
 }
 
 .domaha-window-body {
-  font-size: 1.1rem;
-  color: var(--dw-text-color);
+  font-size: 1.7rem;
+  color:var(--dw-text-color);
   margin-bottom: 2rem;
-  font-family: 'Aref Ruqaa Ink', serif;
+  font-family:"Noto Kufi Arabic", sans-serif;
 
 }
 
@@ -105,7 +88,8 @@ font-family: 'Aref Ruqaa Ink', serif;
   background-color: var(--dw-button-bg);
   color: var(--dw-button-text);
   border: none;
-  padding: 0.75rem 2rem;
+  padding: 0.50rem 1.5rem;
+  margin: auto;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: bold;
