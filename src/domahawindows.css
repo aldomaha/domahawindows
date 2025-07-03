@@ -1,0 +1,128 @@
+/* سنضع كل تنسيقاتنا هنا لاحقًا */
+.domaha-window {
+    /* For later */
+}
+@import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&display=swap');
+:root {
+  --dw-overlay-bg: rgba(0, 0, 0, 0.6);
+  --dw-bg: white;
+  --dw-bg1: #2b2c2d;
+  
+  --domaha-bg: linear-gradient(to right, #4f46e5, #3b82f6);
+
+
+  --dw-border-radius: 12px;
+  --dw-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  --dw-header-border: #e5e7eb;
+  --dw-title-color: #eff3f8;
+  --dw-text-color: #fafcff;
+  --dw-close-color: #9ca3af;
+  --dw-button-bg: #4f46e5;
+  --dw-button-hover-bg: #4338ca;
+  --dw-button-text: white;
+}
+.aref-ruqaa-ink-regular {
+  font-family: "Aref Ruqaa Ink", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.aref-ruqaa-ink-bold {
+  font-family: "Aref Ruqaa Ink", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+.domaha-window-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #545363;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: dw-fadeIn 0.3s ease-out;
+}
+
+.domaha-window-content {
+  background:var(--domaha-bg);
+  padding: 2rem;
+  border-radius: var(--dw-border-radius);
+  box-shadow: var(--dw-shadow);
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  transform: scale(0.95);
+  animation: dw-zoomIn 0.3s ease-out forwards;
+}
+
+.domaha-window-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--dw-header-border);
+}
+
+.domaha-window-title {
+font-family: 'Aref Ruqaa Ink', serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--dw-title-color);
+  margin: 0;
+}
+
+.domaha-window-close {
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--dw-close-color);
+  cursor: pointer;
+  line-height: 1;
+  
+}
+
+.domaha-window-body {
+  font-size: 1.1rem;
+  color: var(--dw-text-color);
+  margin-bottom: 2rem;
+  font-family: 'Aref Ruqaa Ink', serif;
+
+}
+
+.domaha-window-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.domaha-window-confirm {
+  background-color: var(--dw-button-bg);
+  color: var(--dw-button-text);
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.domaha-window-confirm:hover {
+  background-color: var(--dw-button-hover-bg);
+}
+
+@keyframes dw-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dw-zoomIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

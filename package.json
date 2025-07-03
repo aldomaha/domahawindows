@@ -1,0 +1,26 @@
+{
+  "name": "domahawindows",
+  "private": false,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/domahawindows.umd.cjs",
+  "module": "./dist/domahawindows.js",
+  "exports": {
+    ".": {
+      "import": "./dist/domahawindows.js",
+      "require": "./dist/domahawindows.umd.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^4.0.0"
+  }
+}
