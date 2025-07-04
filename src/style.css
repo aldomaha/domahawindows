@@ -8,9 +8,10 @@
   --dw-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   --dw-header-border: #e5e7eb;
   --dw-title-color: #eff3f8;
-  --dw-text-color: #fafcff;
+  --dw-text-color: #ed0e0e;
+  --dw-text-color2: #1d07db;
   --dw-close-color: #9ca3af;
-  --dw-button-bg: #4f46e5;
+  --dw-button-bg: #1810ac;
   --dw-button-hover-bg: #4338ca;
   --dw-button-text: white;
 }
@@ -73,7 +74,7 @@
 
 .domaha-window-body {
   font-size: 1.7rem;
-  color:var(--dw-text-color);
+  color:#545363;
   margin-bottom: 2rem;
   font-family:"Noto Kufi Arabic", sans-serif;
 

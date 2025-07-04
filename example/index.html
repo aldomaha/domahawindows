@@ -1,31 +1,68 @@
-
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>DomahaWindow Example</title>
-    <link rel="stylesheet" href="../src/domahawindows.css">
-   <script type="module" src="../src/domahawindows.js"></script>
+  <meta charset="UTF-8" />
+  <title>تجربة DomahaWindow Quiz</title>
+  <link rel="stylesheet" href="../src/style.css" />
+  <style>
+    body {
+      background: #111827;
+      color: white;
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    button#startQuiz {
+      background-color: var(--dw-button-bg);
+      color: var(--dw-button-text);
+      padding: 1rem 2rem;
+      border: none;
+      font-size: 1.2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    button#startQuiz:hover {
+      background-color: var(--dw-button-hover-bg);
+    }
+  </style>
 </head>
 <body>
-    <h1>تجربة نافذة متعددة الخطوات</h1>
-    <button id="wizardBtn">ابدأ المسابقة</button>
 
-    <script type="module">
-        import DomahaWindow from '../src/domahawindows.js';
+  <h1>🧠 مسابقة تفاعلية</h1>
+  <p>اضغط لبدء المسابقة:</p>
 
-        // This is the "script" for our play
-        const myQuizSteps = [
-            { title: 'السؤال الأول', content: 'ما هي عاصمة السعودية؟' },
-            { title: 'السؤال الثاني', content: 'ما هو أعلى جبل في العالم؟' },
-            { title: 'النهاية', content: 'لقد أكملت المسابقة بنجاح!' }
-        ];
+  <button id="startQuiz">ابدأ المسابقة</button>
 
-        // When the button is clicked, we tell the director to start the show
-        document.getElementById('wizardBtn').addEventListener('click', () => {
-            DomahaWindow.wizard(myQuizSteps);
-        });
-    </script>
+  <script type="module">
+    import DomahaWindow from '../dist/domahawindows.js'; // أو المسار الصحيح لملفك
+
+    document.getElementById('startQuiz').addEventListener('click', () => {
+      DomahaWindow.quiz({
+        players: ['سارة', 'عبدالله'],
+        questions: [
+          {
+            question: 'ما هو لون علم السعودية؟',
+            choices: ['أخضر', 'أحمر', 'أزرق', 'برتقالي'],
+            correctIndex: 0
+          },
+          {
+            question: 'كم عدد أيام الأسبوع؟',
+            choices: ['5', '6', '7', '8'],
+            correctIndex: 2
+          }
+        ],
+        onFinish(scores) {
+          alert('🏁 النتائج:\n' +
+            Object.entries(scores).map(([n, s]) => `${n}: ${s} نقطة`).join('\n')
+          );
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
-
