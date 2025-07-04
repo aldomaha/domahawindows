@@ -21,6 +21,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "rollup-plugin-css-only": "^4.5.2",
     "vite": "^4.0.0"
   }
 }
