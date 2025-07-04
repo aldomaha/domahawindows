@@ -1,34 +1,42 @@
-// vite.config.js (في مشروع مكتبتك domahawindows)
+ // vite.config.js (في مشروع مكتبتك domahawindows)
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import postcss from 'rollup-plugin-postcss'; // استيراد الـ plugin
 
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/domahawindows.js'), // نقطة الدخول الرئيسية لـ JS
-      name: 'DomahaWindow', // الاسم العام للمكتبة
+      entry: resolve(__dirname, 'src/domahawindows.js'),
+      name: 'DomahaWindow',
       fileName: (format) => {
-        if (format === 'es') return 'domahawindows.js';       // اسم ملف ES Module
-        if (format === 'umd') return 'domahawindows.umd.cjs'; // اسم ملف UMD CommonJS
-        return `domahawindows.${format}.js`; // لأي تنسيقات أخرى
+        if (format === 'es') return 'domahawindows.js';
+        if (format === 'umd') return 'domahawindows.umd.cjs';
+        return `domahawindows.${format}.js`;
       },
     },
-    
-    // هذا السطر يضمن استخراج CSS كملف منفصل
-    cssCodeSplit: true, 
+
+    // أزل cssCodeSplit: true من هنا
 
     rollupOptions: {
+      // أضف الـ plugin هنا
+      plugins: [
+        postcss({
+          extract: true, // هذا هو الخيار الحاسم: يجبر Rollup على استخراج CSS إلى ملف منفصل
+          minimize: true, // تصغير الـ CSS
+          // إذا كنت تستخدم PostCSS plugins أخرى (مثل TailwindCSS)، يمكنك إعدادها هنا
+          // plugins: [require('tailwindcss'), require('autoprefixer')],
+        }),
+      ],
       output: {
-        exports: 'named', // يضمن التعامل الصحيح مع التصديات الافتراضية
+        exports: 'named', // هذا مهم للتصدير الافتراضي
 
-        // هذا الجزء هو الأكثر أهمية لضمان تسمية ملف الـ CSS وإخراجه
-        assetFileNames: (assetInfo) => {
-          // إذا كان الملف هو CSS (ويحتوي على .css في اسمه)
-          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
-            return 'style.css'; // أو 'domahawindows.css' إذا كنت تفضل هذا الاسم
-          }
-          return assetInfo.name; // للتعامل مع الأصول الأخرى (مثل الصور إذا وجدت)
-        },
+        // أزل assetFileNames من هنا إذا كنت تستخدم plugin
+        // assetFileNames: (assetInfo) => {
+        //   if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+        //     return 'style.css';
+        //   }
+        //   return assetInfo.name;
+        // },
       }
     }
   }
