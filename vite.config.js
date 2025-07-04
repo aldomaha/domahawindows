@@ -5,26 +5,29 @@ import { resolve } from 'path';
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/domahawindows.js'),
-      name: 'DomahaWindow',
+      entry: resolve(__dirname, 'src/domahawindows.js'), // نقطة الدخول الرئيسية لـ JS
+      name: 'DomahaWindow', // الاسم العام للمكتبة
       fileName: (format) => {
-        if (format === 'es') return 'domahawindows.js';
-        if (format === 'umd') return 'domahawindows.umd.cjs';
-        return `domahawindows.${format}.js`;
+        if (format === 'es') return 'domahawindows.js';       // اسم ملف ES Module
+        if (format === 'umd') return 'domahawindows.umd.cjs'; // اسم ملف UMD CommonJS
+        return `domahawindows.${format}.js`; // لأي تنسيقات أخرى
       },
     },
+    
     // هذا السطر يضمن استخراج CSS كملف منفصل
     cssCodeSplit: true, 
 
     rollupOptions: {
       output: {
-        exports: 'named', // هذا مهم للتصدير الافتراضي
+        exports: 'named', // يضمن التعامل الصحيح مع التصديات الافتراضية
 
-        // هذا الخيار قد يكون مفيدًا لضمان تسمية ملف الـ CSS بشكل صحيح
+        // هذا الجزء هو الأكثر أهمية لضمان تسمية ملف الـ CSS وإخراجه
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') return 'style.css'; // تأكد من اسم الملف هنا
-          if (assetInfo.name === 'domahawindows.css') return 'style.css'; // إذا كان اسمه الأصلي domahawindows.css
-          return assetInfo.name;
+          // إذا كان الملف هو CSS (ويحتوي على .css في اسمه)
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'style.css'; // أو 'domahawindows.css' إذا كنت تفضل هذا الاسم
+          }
+          return assetInfo.name; // للتعامل مع الأصول الأخرى (مثل الصور إذا وجدت)
         },
       }
     }
