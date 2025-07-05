@@ -1,68 +1,95 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>تجربة DomahaWindow Quiz</title>
-  <link rel="stylesheet" href="../src/style.css" />
-  <style>
-    body {
-      background: #111827;
-      color: white;
-      font-family: 'Noto Kufi Arabic', sans-serif;
-      text-align: center;
-      padding: 3rem;
-    }
-
-    button#startQuiz {
-      background-color: var(--dw-button-bg);
-      color: var(--dw-button-text);
-      padding: 1rem 2rem;
-      border: none;
-      font-size: 1.2rem;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-
-    button#startQuiz:hover {
-      background-color: var(--dw-button-hover-bg);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار DomahaWindow التصريحية</title>
+    <!--
+        هنا نقوم بتحميل ملف CSS المجمع لمكتبة DomahaWindow.
+        يجب أن يكون هذا الملف موجودًا في مجلد 'dist' بعد عملية البناء.
+        المسار 'dist/style.css' يفترض أن ملف index.html هذا موجود في جذر مشروع المكتبة.
+    -->
+    <link rel="stylesheet" href="../dist/style.css">
+    <style>
+        body {
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #4f46e5;
+            color: white;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #3b82f6;
+        }
+        h1 {
+            color: #4f46e5;
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 <body>
+    <h1>اختبار DomahaWindow التصريحية</h1>
 
-  <h1>🧠 مسابقة تفاعلية</h1>
-  <p>اضغط لبدء المسابقة:</p>
+    <!--
+        مثال على نافذة DomahaWindow تصريحية بسيطة
+        ستظهر تلقائياً عند تحميل الصفحة بفضل dw-show-on-load
+    -->
+    <div dw-window dw-title="مرحباً بك!" dw-show-on-load dw-close-on-click-outside>
+        <p>هذه نافذة DomahaWindow تم تعريفها مباشرة في HTML!</p>
+        <p>يمكنك إغلاقها بالنقر خارجها أو باستخدام الزر.</p>
+        <button dw-close class="domaha-window-confirm">إغلاق النافذة</button>
+    </div>
 
-  <button id="startQuiz">ابدأ المسابقة</button>
+    <!--
+        مثال على نافذة DomahaWindow تصريحية تفتح بواسطة زر
+        dw-open-button يشير إلى ID الزر الذي سيفتحها
+    -->
+    <button id="open-settings-window">فتح نافذة الإعدادات</button>
+    <div dw-window id="settings-window" dw-title="إعدادات التطبيق" dw-open-button="open-settings-window">
+        <p>هنا يمكنك إضافة خيارات الإعدادات الخاصة بك.</p>
+        <label for="theme">السمة:</label>
+        <select id="theme">
+            <option value="light">فاتح</option>
+            <option value="dark">داكن</option>
+        </select>
+        <button dw-close class="domaha-window-confirm">حفظ وإغلاق</button>
+    </div>
 
-  <script type="module">
-    import DomahaWindow from '../dist/domahawindows.js'; // أو المسار الصحيح لملفك
+    <!--
+        هنا نقوم بتحميل ملف JavaScript المجمع لمكتبة DomahaWindow.
+        يجب أن يكون هذا الملف موجودًا في مجلد 'dist' بعد عملية البناء.
+        المسار './dist/domahawindows.js' يفترض أن ملف index.html هذا موجود في جذر مشروع المكتبة.
+        type="module" ضروري لتشغيل الكود الذي يعتمد على ES Modules ودالة init().
+    -->
+    <script type="module">
+        // نقطة فحص: تأكد أن هذا السكربت يتم تحميله
+        console.log('Script domahawindows.js is loading...');
+        import DomahaWindow from '../dist/domahawindows.js';
+        
+        // نقطة فحص: تأكد أن DomahaWindow تم استيرادها بنجاح
+        console.log('DomahaWindow imported:', DomahaWindow);
 
-    document.getElementById('startQuiz').addEventListener('click', () => {
-      DomahaWindow.quiz({
-        players: ['سارة', 'عبدالله'],
-        questions: [
-          {
-            question: 'ما هو لون علم السعودية؟',
-            choices: ['أخضر', 'أحمر', 'أزرق', 'برتقالي'],
-            correctIndex: 0
-          },
-          {
-            question: 'كم عدد أيام الأسبوع؟',
-            choices: ['5', '6', '7', '8'],
-            correctIndex: 2
-          }
-        ],
-        onFinish(scores) {
-          alert('🏁 النتائج:\n' +
-            Object.entries(scores).map(([n, s]) => `${n}: ${s} نقطة`).join('\n')
-          );
-        }
-      });
-    });
-  </script>
-
+        // نقطة فحص: تأكد أن DomahaWindow.init() يتم استدعاؤها
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOMContentLoaded fired. Calling DomahaWindow.init()...');
+            DomahaWindow.init();
+            console.log('DomahaWindow.init() called.');
+        });
+    </script>
 </body>
 </html>
